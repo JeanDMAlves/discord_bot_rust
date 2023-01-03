@@ -15,8 +15,10 @@ async fn stock(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
 
     let time_series = alpha_client.get_time_series_weekly(&stock_id).await.unwrap();
     let entry = time_series.entries.last().unwrap().to_owned();
-    let enviar = format!(" Data: {},\nAbertura: {},\nFechamento: {},\nMaior Valor: {},\nMenor Valor: {},\nVolume: {} 
-    ", entry.date, entry.open, entry.close, entry.high, entry.low, entry.volume);
+    let enviar = format!(
+        "Data: {},\nAbertura: {},\nFechamento: {},\nMaior Valor: {},\nMenor Valor: {},\nVolume: {}",
+        entry.date, entry.open, entry.close, entry.high, entry.low, entry.volume);
+    
     msg.channel_id.say(&ctx.http, enviar).await?;
     
     Ok(())
