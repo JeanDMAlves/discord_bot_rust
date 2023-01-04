@@ -10,3 +10,7 @@ Cargo.lock
 **/*.rs.bk
 .env
 .vscode/
+
+database.sqlite
+database.sqlite-shm
+database.sqlite-wal
