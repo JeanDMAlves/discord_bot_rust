@@ -22,20 +22,26 @@ async fn todo(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
         .expect("Couldn't connect to database");
 
     if command == "add"{
-        sqlx::query!(
+        let teste = sqlx::query!(
             "INSERT INTO todo (task, user_id) VALUES (?, ?)",
             task_description, 
             user_id
         ).execute(&database).await.unwrap();
+        println!("{:?}", teste);
         msg.channel_id.say(&ctx, "Item adicionado com sucesso!").await.unwrap();
-    } else if command == "remove"{
-        sqlx::query!(
+    } 
+    else if command == "remove"{
+        let resultado = sqlx::query!(
             "DELETE FROM todo WHERE user_id = ? AND task = ?",
             user_id, task_description
         ).execute(&database).await.unwrap();
-
-        msg.channel_id.say(&ctx, "Item removido com sucesso!").await.unwrap();
-    } else if command == "list"{
+        if resultado.rows_affected() > 0 {
+            msg.channel_id.say(&ctx, "Item removido com sucesso!").await.unwrap();
+        } else{
+            msg.channel_id.say(&ctx, "Não consegui remover o item!").await.unwrap();
+        };     
+    } 
+    else if command == "list"{
         let todos = sqlx::query!("SELECT task FROM todo WHERE user_id = ?", user_id)
             .fetch_all(&database)
             .await
@@ -48,7 +54,8 @@ async fn todo(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
         };
 
         msg.channel_id.say(&ctx, response).await.unwrap();
-    } else {
+    } 
+    else {
         msg.channel_id.say(&ctx, "Comando desconhecido").await.unwrap();
     };
 
