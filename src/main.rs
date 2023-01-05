@@ -7,7 +7,8 @@ use crate::commands::{
     ping::*,
     stock::*,
     crypto::*,
-    todo::*
+    todo::*,
+    cep::*
 };
 
 use serenity::{
@@ -24,7 +25,7 @@ use serenity::{
 
 struct Handler;
 #[group]
-#[commands(about, ping, stock, crypto, todo)]
+#[commands(about, ping, stock, crypto, todo, cep)]
 struct General;
 
 #[async_trait]
