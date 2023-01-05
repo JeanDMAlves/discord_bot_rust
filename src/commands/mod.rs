@@ -4,3 +4,4 @@ pub mod stock;
 pub mod crypto;
 pub mod todo;
 pub mod cep;
+pub mod help;

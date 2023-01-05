@@ -8,7 +8,8 @@ use crate::commands::{
     stock::*,
     crypto::*,
     todo::*,
-    cep::*
+    cep::*,
+    help::*
 };
 
 use serenity::{
@@ -25,7 +26,7 @@ use serenity::{
 
 struct Handler;
 #[group]
-#[commands(about, ping, stock, crypto, todo, cep)]
+#[commands(about, ping, stock, crypto, todo, cep, help)]
 struct General;
 
 #[async_trait]
@@ -34,7 +35,6 @@ impl EventHandler for Handler{
         println!("{} conectado", ready.user.name)
     }
 }
-
 
 #[tokio::main]
 async fn main() {
